@@ -1,4 +1,6 @@
 package ntpd_pckg1;
 
-public interface MenuConstants {
+public interface MenuConstants
+{
+    final String fileText = "file";
 }
