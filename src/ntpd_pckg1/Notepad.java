@@ -2,15 +2,15 @@ package ntpd_pckg1;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-public class Notepad implements ActionListener
+public class Notepad extends Component implements ActionListener
 {
     JFrame f;
     JTextArea ta;
-    static JLabel l;
     JMenuBar menuBar;
     JMenu fileMenu, editMenu, helpMenu;
     JMenuItem newFileItem, openFileItem, saveFileItem, cutItem, copyItem, pasteItem, selectAllItem, aboutItem;
@@ -32,6 +32,7 @@ public class Notepad implements ActionListener
         selectAllItem = new JMenuItem("Select All");
         aboutItem = new JMenuItem("About");
         openFileItem.addActionListener(this);
+        saveFileItem.addActionListener(this);
         newFileItem.addActionListener(this);
         cutItem.addActionListener(this);
         copyItem.addActionListener(this);
@@ -81,24 +82,24 @@ public class Notepad implements ActionListener
         }
         else if (e.getSource()==saveFileItem)
         {
-            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            int r = fileChooser.showSaveDialog(null);
-            if (r==JFileChooser.APPROVE_OPTION)
+            JFileChooser fc = new JFileChooser();
+            fc.showSaveDialog(this);
+            File f = fc.getSelectedFile();
             {
-                File fileToSave = fileChooser.getSelectedFile();
-                try
-                {
-                    boolean isFile = false;
-                    if (!fileToSave.exists())
-                        isFile=fileToSave.createNewFile();
-                    FileWriter outFile = new FileWriter(fileToSave);
+                try {
+                    FileWriter fw = new FileWriter(f);
+                    String text = ta.getText();
+                    fw.write(text);
+                    fw.close();
                 }
-                catch (IOException exception){
-                    System.out.println(exception);
+                catch (IOException ioException) {
+                    System.out.println(ioException);
                 }
             }
+
         }
     }
+
     public static void main(String[] args)
     {
         new Notepad();
