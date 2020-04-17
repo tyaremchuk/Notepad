@@ -14,6 +14,7 @@ public class Notepad extends Component implements ActionListener
     JMenuBar menuBar;
     JMenu fileMenu, editMenu, helpMenu;
     JMenuItem newFileItem, openFileItem, saveFileItem, cutItem, copyItem, pasteItem, selectAllItem, aboutItem;
+    final String aboutText="This notepad application is developed by tyaremchuk from the scratch";
 
     Notepad()
     {
@@ -38,6 +39,7 @@ public class Notepad extends Component implements ActionListener
         copyItem.addActionListener(this);
         pasteItem.addActionListener(this);
         selectAllItem.addActionListener(this);
+        aboutItem.addActionListener(this);
         fileMenu.add(newFileItem); fileMenu.add(openFileItem); fileMenu.add(saveFileItem);
         editMenu.add(cutItem); editMenu.add(copyItem); editMenu.add(pasteItem); editMenu.add(selectAllItem);
         helpMenu.add(aboutItem);
@@ -63,6 +65,10 @@ public class Notepad extends Component implements ActionListener
             ta.paste();
         else if (e.getSource()==selectAllItem)
             ta.selectAll();
+        else if (e.getSource()==aboutItem)
+        {
+            JOptionPane.showMessageDialog(Notepad.this.f, aboutText, "Made By", JOptionPane.INFORMATION_MESSAGE);
+        }
         else if (e.getSource()==openFileItem)
         {
             JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
